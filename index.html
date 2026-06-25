@@ -529,6 +529,14 @@ function showResult(){
     localStorage.setItem('zhi_english_quiz_answers', JSON.stringify(answers));
   }catch(e){}
 
+  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbz8ZOzxEmN7Il44Gv_0RzKC2zkKE-ga8vL6UcC_pb9JDdrHCIbzi6Txu3L7trulDQ6J/exec";
+  fetch(SHEET_WEBHOOK_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(answers)
+  }).catch(() => {});
+
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-result').classList.add('active');
   setProgress('result');

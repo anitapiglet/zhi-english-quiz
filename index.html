@@ -432,10 +432,10 @@
       <a class="cta-line" id="lineLink" href="#" target="_blank">
         加入知英語官方 LINE
       </a>
-      <a class="cta-meet" id="meetLink" href="https://scheduler.zoom.us/support-j-english/-intro" target="_blank">
+      <a class="cta-meet" id="meetLink" href="https://scheduler.zoom.us/support-j-english/-intro" target="_blank" onclick="goToLineAfterBooking()">
         預約一對一諮詢（Zoom）
       </a>
-      <div class="cta-note">點選預約後，將開啟 Zoom 預約頁面，選擇方便的時間即可</div>
+      <div class="cta-note">點選預約後，將開啟 Zoom 預約頁面（新分頁），並自動帶你前往加入官方 LINE</div>
     </div>
 
   </main>
@@ -445,6 +445,10 @@
 const LINE_ID = "@J.ENGLISH";
 const LINE_URL = "https://line.me/R/ti/p/" + encodeURIComponent(LINE_ID);
 document.getElementById('lineLink').href = LINE_URL;
+
+function goToLineAfterBooking(){
+  setTimeout(() => { window.location.href = LINE_URL; }, 400);
+}
 
 const totalSteps = 6;
 const answers = {};

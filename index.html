@@ -438,22 +438,37 @@
 
     <!-- Result -->
     <div class="screen" id="screen-result">
-      <div class="result-icon">🎉</div>
-      <div class="result-title">完成測驗！</div>
-      <div class="result-sub">
-        以下是你的學習計劃摘要，<br>
-        加入官方 LINE 並預約一對一諮詢，<br>
-        讓顧問為你客製學習計劃！
-      </div>
-      <div class="summary-card" id="summaryCard"></div>
+      <div id="result-default">
+        <div class="result-icon">🎉</div>
+        <div class="result-title">完成測驗！</div>
+        <div class="result-sub">
+          以下是你的學習計劃摘要，<br>
+          加入官方 LINE 並預約一對一諮詢，<br>
+          讓顧問為你客製學習計劃！
+        </div>
+        <div class="summary-card" id="summaryCard"></div>
 
-      <a class="cta-line" id="lineLink" href="#" target="_blank">
-        加入知英語官方 LINE
-      </a>
-      <a class="cta-meet" id="meetLink" href="https://scheduler.zoom.us/support-j-english/-intro" target="_blank" onclick="goToLineAfterBooking()">
-        預約一對一諮詢（Zoom）
-      </a>
-      <div class="cta-note">點選預約後，將開啟 Zoom 預約頁面（新分頁），並自動帶你前往加入官方 LINE</div>
+        <a class="cta-line" id="lineLink" href="#" target="_blank">
+          加入知英語官方 LINE
+        </a>
+        <a class="cta-meet" id="meetLink" href="https://scheduler.zoom.us/support-j-english/-intro" target="_blank" onclick="showLineReminder()">
+          預約一對一諮詢（Zoom）
+        </a>
+        <div class="cta-note">點選預約後，將開啟 Zoom 預約頁面</div>
+      </div>
+
+      <div id="result-line-reminder" style="display:none;">
+        <div class="result-icon">✅</div>
+        <div class="result-title">已開啟 Zoom 預約頁面</div>
+        <div class="result-sub">
+          別忘了加入知英語官方 LINE，<br>
+          顧問會透過 LINE 與你確認上課細節！
+        </div>
+        <a class="cta-line" id="lineLink2" href="#" target="_blank">
+          加入知英語官方 LINE
+        </a>
+        <div class="cta-note">如果剛剛沒有自動開啟 Zoom 頁面，<a href="https://scheduler.zoom.us/support-j-english/-intro" target="_blank" style="color:var(--dark); text-decoration:underline;">點此重新開啟</a></div>
+      </div>
     </div>
 
   </main>
@@ -463,9 +478,12 @@
 const LINE_ID = "@J.ENGLISH";
 const LINE_URL = "https://line.me/R/ti/p/" + encodeURIComponent(LINE_ID);
 document.getElementById('lineLink').href = LINE_URL;
+document.getElementById('lineLink2').href = LINE_URL;
 
-function goToLineAfterBooking(){
-  setTimeout(() => { window.location.href = LINE_URL; }, 400);
+function showLineReminder(){
+  document.getElementById('result-default').style.display = 'none';
+  document.getElementById('result-line-reminder').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 const totalSteps = 7;

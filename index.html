@@ -288,16 +288,17 @@
       <button class="btn btn-start" onclick="goTo(1)">開始測驗</button>
     </div>
 
-    <!-- Q1 -->
+    <!-- Q1: Name -->
     <div class="screen" id="screen-1">
       <span class="q-num">Q1</span>
-      <div class="q-title">預計什麼時候要考雅思？</div>
-      <div class="options" data-q="q1">
-        <div class="option" data-value="1個月後">1 個月後</div>
-        <div class="option" data-value="2個月後">2 個月後</div>
-        <div class="option" data-value="3個月後">3 個月後</div>
-        <div class="option" data-value="5個月後">5 個月後</div>
-        <div class="option" data-value="1年">1 年</div>
+      <div class="q-title">Hello 歡迎加入知英語<br>想問問您的英文名字怎麼稱呼：</div>
+      <div class="sub-fields active" style="margin-top:0;">
+        <div class="field-row">
+          <div style="flex:1;">
+            <label>英文名字</label>
+            <input type="text" id="english-name" placeholder="請輸入您的英文名字" oninput="document.getElementById('next-1').disabled = !this.value.trim();">
+          </div>
+        </div>
       </div>
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(0)">上一步</button>
@@ -308,12 +309,13 @@
     <!-- Q2 -->
     <div class="screen" id="screen-2">
       <span class="q-num">Q2</span>
-      <div class="q-title">預計目標幾分？</div>
+      <div class="q-title">預計什麼時候要考雅思？</div>
       <div class="options" data-q="q2">
-        <div class="option" data-value="6">6</div>
-        <div class="option" data-value="6.5">6.5</div>
-        <div class="option" data-value="7">7</div>
-        <div class="option" data-value="7.5">7.5</div>
+        <div class="option" data-value="1個月後">1 個月後</div>
+        <div class="option" data-value="2個月後">2 個月後</div>
+        <div class="option" data-value="3個月後">3 個月後</div>
+        <div class="option" data-value="5個月後">5 個月後</div>
+        <div class="option" data-value="1年">1 年</div>
       </div>
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(1)">上一步</button>
@@ -324,8 +326,24 @@
     <!-- Q3 -->
     <div class="screen" id="screen-3">
       <span class="q-num">Q3</span>
-      <div class="q-title">以前有考過雅思嗎？</div>
+      <div class="q-title">預計目標幾分？</div>
       <div class="options" data-q="q3">
+        <div class="option" data-value="6">6</div>
+        <div class="option" data-value="6.5">6.5</div>
+        <div class="option" data-value="7">7</div>
+        <div class="option" data-value="7.5">7.5</div>
+      </div>
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goTo(2)">上一步</button>
+        <button class="btn btn-primary" id="next-3" disabled onclick="goTo(4)">下一步</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="screen" id="screen-4">
+      <span class="q-num">Q4</span>
+      <div class="q-title">以前有考過雅思嗎？</div>
+      <div class="options" data-q="q4">
         <div class="option" data-value="是">是</div>
         <div class="option" data-value="否">否</div>
       </div>
@@ -358,16 +376,16 @@
         </div>
       </div>
       <div class="nav-buttons">
-        <button class="btn btn-secondary" onclick="goTo(2)">上一步</button>
-        <button class="btn btn-primary" id="next-3" disabled onclick="goTo(4)">下一步</button>
+        <button class="btn btn-secondary" onclick="goTo(3)">上一步</button>
+        <button class="btn btn-primary" id="next-4" disabled onclick="goTo(5)">下一步</button>
       </div>
     </div>
 
-    <!-- Q4 -->
-    <div class="screen" id="screen-4">
-      <span class="q-num">Q4</span>
+    <!-- Q5 -->
+    <div class="screen" id="screen-5">
+      <span class="q-num">Q5</span>
       <div class="q-title">有考過多益或托福嗎？</div>
-      <div class="options" data-q="q4">
+      <div class="options" data-q="q5">
         <div class="option" data-value="是">是</div>
         <div class="option" data-value="否">否</div>
       </div>
@@ -384,21 +402,6 @@
         </div>
       </div>
       <div class="nav-buttons">
-        <button class="btn btn-secondary" onclick="goTo(3)">上一步</button>
-        <button class="btn btn-primary" id="next-4" disabled onclick="goTo(5)">下一步</button>
-      </div>
-    </div>
-
-    <!-- Q5 -->
-    <div class="screen" id="screen-5">
-      <span class="q-num">Q5</span>
-      <div class="q-title">平時可以上課的時間？</div>
-      <div class="options" data-q="q5">
-        <div class="option" data-value="全天">全天</div>
-        <div class="option" data-value="早上">早上</div>
-        <div class="option" data-value="晚上18:00後">晚上 18:00 後</div>
-      </div>
-      <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(4)">上一步</button>
         <button class="btn btn-primary" id="next-5" disabled onclick="goTo(6)">下一步</button>
       </div>
@@ -407,14 +410,29 @@
     <!-- Q6 -->
     <div class="screen" id="screen-6">
       <span class="q-num">Q6</span>
-      <div class="q-title">希望顧問如何安排你的學習計劃？</div>
+      <div class="q-title">平時可以上課的時間？</div>
       <div class="options" data-q="q6">
+        <div class="option" data-value="全天">全天</div>
+        <div class="option" data-value="早上">早上</div>
+        <div class="option" data-value="晚上18:00後">晚上 18:00 後</div>
+      </div>
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goTo(5)">上一步</button>
+        <button class="btn btn-primary" id="next-6" disabled onclick="goTo(7)">下一步</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="screen" id="screen-7">
+      <span class="q-num">Q7</span>
+      <div class="q-title">希望顧問如何安排你的學習計劃？</div>
+      <div class="options" data-q="q7">
         <div class="option" data-value="軍事化訓練">我想密集的好好讀書！軍事化訓練</div>
         <div class="option" data-value="彈性安排">一週安排 3-5 天，可以彈性一點</div>
       </div>
       <div class="nav-buttons">
-        <button class="btn btn-secondary" onclick="goTo(5)">上一步</button>
-        <button class="btn btn-primary" id="next-6" disabled onclick="showResult()">送出</button>
+        <button class="btn btn-secondary" onclick="goTo(6)">上一步</button>
+        <button class="btn btn-primary" id="next-7" disabled onclick="showResult()">送出</button>
       </div>
     </div>
 
@@ -450,7 +468,7 @@ function goToLineAfterBooking(){
   setTimeout(() => { window.location.href = LINE_URL; }, 400);
 }
 
-const totalSteps = 6;
+const totalSteps = 7;
 const answers = {};
 
 function setProgress(step){
@@ -487,10 +505,10 @@ document.querySelectorAll('.options').forEach(group => {
       const screenNum = qKey.replace('q','');
       document.getElementById('next-' + screenNum).disabled = false;
 
-      if(qKey === 'q3'){
+      if(qKey === 'q4'){
         document.getElementById('ielts-sub').classList.toggle('active', opt.dataset.value === '是');
       }
-      if(qKey === 'q4'){
+      if(qKey === 'q5'){
         document.getElementById('toefl-sub').classList.toggle('active', opt.dataset.value === '是');
       }
     });
@@ -498,32 +516,34 @@ document.querySelectorAll('.options').forEach(group => {
 });
 
 function showResult(){
-  if(answers.q3 === '是'){
+  answers.name = document.getElementById('english-name').value;
+  if(answers.q4 === '是'){
     answers.ielts_listening = document.getElementById('ielts-listening').value;
     answers.ielts_reading = document.getElementById('ielts-reading').value;
     answers.ielts_writing = document.getElementById('ielts-writing').value;
     answers.ielts_speaking = document.getElementById('ielts-speaking').value;
     answers.ielts_overall = document.getElementById('ielts-overall').value;
   }
-  if(answers.q4 === '是'){
+  if(answers.q5 === '是'){
     answers.toeic = document.getElementById('toeic-score').value;
     answers.toefl = document.getElementById('toefl-score').value;
   }
 
   const rows = [
-    ['預計考試時間', answers.q1],
-    ['目標分數', answers.q2],
-    ['是否考過雅思', answers.q3],
+    ['英文名字', answers.name],
+    ['預計考試時間', answers.q2],
+    ['目標分數', answers.q3],
+    ['是否考過雅思', answers.q4],
   ];
-  if(answers.q3 === '是'){
+  if(answers.q4 === '是'){
     rows.push(['雅思成績', `聽${answers.ielts_listening||'-'} 讀${answers.ielts_reading||'-'} 寫${answers.ielts_writing||'-'} 說${answers.ielts_speaking||'-'} / 總${answers.ielts_overall||'-'}`]);
   }
-  rows.push(['多益/托福經驗', answers.q4]);
-  if(answers.q4 === '是'){
+  rows.push(['多益/托福經驗', answers.q5]);
+  if(answers.q5 === '是'){
     rows.push(['多益/托福分數', `TOEIC ${answers.toeic||'-'} / TOEFL ${answers.toefl||'-'}`]);
   }
-  rows.push(['可上課時間', answers.q5]);
-  rows.push(['學習計劃偏好', answers.q6 === '軍事化訓練' ? '密集軍事化訓練' : '一週3-5天彈性安排']);
+  rows.push(['可上課時間', answers.q6]);
+  rows.push(['學習計劃偏好', answers.q7 === '軍事化訓練' ? '密集軍事化訓練' : '一週3-5天彈性安排']);
 
   document.getElementById('summaryCard').innerHTML = rows.map(r =>
     `<div class="summary-row"><span class="label">${r[0]}</span><span class="value">${r[1] || '-'}</span></div>`

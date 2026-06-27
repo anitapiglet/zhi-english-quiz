@@ -302,24 +302,7 @@
       </div>
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(0)">上一步</button>
-        <button class="btn btn-primary" id="next-1" disabled onclick="goTo('line-gate')">下一步</button>
-      </div>
-    </div>
-
-    <!-- LINE Gate -->
-    <div class="screen" id="screen-line-gate">
-      <div class="result-icon">💬</div>
-      <div class="intro-title">先加入知英語官方 LINE</div>
-      <div class="intro-sub">
-        加入後即可繼續填寫問卷，<br>
-        顧問也會透過 LINE 與你聯繫學習計劃！
-      </div>
-      <a class="cta-line" id="lineLink3" href="#" target="_blank" style="margin-bottom:16px;">
-        加入知英語官方 LINE
-      </a>
-      <div class="nav-buttons" style="margin-top:0;">
-        <button class="btn btn-secondary" onclick="goTo(1)">上一步</button>
-        <button class="btn btn-primary" onclick="goTo(2)">我已加入，繼續填寫</button>
+        <button class="btn btn-primary" id="next-1" disabled onclick="goTo(2)">下一步</button>
       </div>
     </div>
 
@@ -518,7 +501,6 @@ const LINE_ID = "@J.ENGLISH";
 const LINE_URL = "https://line.me/R/ti/p/" + encodeURIComponent(LINE_ID);
 document.getElementById('lineLink').href = LINE_URL;
 document.getElementById('lineLink2').href = LINE_URL;
-document.getElementById('lineLink3').href = LINE_URL;
 
 function showLineReminder(){
   document.getElementById('result-default').style.display = 'none';
@@ -531,7 +513,7 @@ const answers = {};
 
 function setProgress(step){
   const wrap = document.getElementById('progressWrap');
-  if(step === 0 || step === 'result' || step === 'line-gate'){
+  if(step === 0 || step === 'result'){
     wrap.style.display = 'none';
     return;
   }
@@ -545,8 +527,6 @@ function goTo(step){
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   if(step === 0){
     document.getElementById('screen-intro').classList.add('active');
-  } else if(step === 'line-gate'){
-    document.getElementById('screen-line-gate').classList.add('active');
   } else {
     document.getElementById('screen-' + step).classList.add('active');
   }

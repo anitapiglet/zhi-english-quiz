@@ -414,6 +414,12 @@
             <input type="number" min="0" max="120" id="toefl-score" placeholder="未考過可留空">
           </div>
         </div>
+        <div class="field-row">
+          <div style="flex:1;">
+            <label>其他檢定（選填，請填名稱＋成績）</label>
+            <input type="text" id="other-cert" placeholder="例：TOEFL Junior 850">
+          </div>
+        </div>
       </div>
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(4)">上一步</button>
@@ -580,6 +586,7 @@ function showResult(){
   if(answers.q5 === '是'){
     answers.toeic = document.getElementById('toeic-score').value;
     answers.toefl = document.getElementById('toefl-score').value;
+    answers.other_cert = document.getElementById('other-cert').value;
   }
 
   const rows = [
@@ -600,6 +607,9 @@ function showResult(){
     rows.push(['多益/托福經驗', answers.q5 || '-']);
     if(answers.q5 === '是'){
       rows.push(['多益/托福分數', `TOEIC ${answers.toeic||'-'} / TOEFL ${answers.toefl||'-'}`]);
+      if(answers.other_cert){
+        rows.push(['其他檢定', answers.other_cert]);
+      }
     }
   }
   rows.push(['可上課時間', answers.q6]);

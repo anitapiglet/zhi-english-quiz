@@ -580,9 +580,9 @@ document.querySelectorAll('.options').forEach(group => {
 
 function goToQ5(){
   if(answers.q5 === '是'){
-    goTo(8);
+    goTo(7);  // skip q6 (toefl), go straight to available times
   } else {
-    goTo(7);
+    goTo(6);  // show q6 (toefl) first
   }
 }
 

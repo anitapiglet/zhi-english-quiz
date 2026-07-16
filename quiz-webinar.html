@@ -644,11 +644,7 @@ function showResult(){
   }
 
   const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxnjX_lrolgU9dVBDIuTsbP_hal7dnDMbRd_yxc2gkIb3yrGt1Z5KicMVmDnTn6s9Aa/exec";
-  fetch(SHEET_WEBHOOK_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify({
+  const payload = {
       name: answers.name,
       webinar_impression: answers.q2 + (answers.webinar_impression_other ? `（${answers.webinar_impression_other}）` : ''),
       q2: answers.q3,
@@ -667,7 +663,13 @@ function showResult(){
       other_cert: answers.other_cert,
       q6: answers.q7,
       q7: answers.q8
-    })
+  };
+  alert('送出資料：\nwebinar_impression=' + payload.webinar_impression + '\nq6(可上課)=' + payload.q6);
+  fetch(SHEET_WEBHOOK_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(payload)
   }).catch(() => {});
 
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));

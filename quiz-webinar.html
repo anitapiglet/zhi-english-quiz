@@ -648,7 +648,26 @@ function showResult(){
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(answers)
+    body: JSON.stringify({
+      name: answers.name,
+      webinar_impression: answers.q2 + (answers.webinar_impression_other ? `（${answers.webinar_impression_other}）` : ''),
+      q2: answers.q3,
+      q3: answers.q4,
+      band_requirement: answers.band_requirement,
+      q4: answers.q5,
+      ielts_listening: answers.ielts_listening,
+      ielts_reading: answers.ielts_reading,
+      ielts_writing: answers.ielts_writing,
+      ielts_speaking: answers.ielts_speaking,
+      ielts_overall: answers.ielts_overall,
+      ielts_last_date: answers.ielts_last_date,
+      q5: answers.q6,
+      toeic: answers.toeic,
+      toefl: answers.toefl,
+      other_cert: answers.other_cert,
+      q6: answers.q7,
+      q7: answers.q8
+    })
   }).catch(() => {});
 
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));

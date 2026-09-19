@@ -382,6 +382,7 @@ function showResult(){
   }
 
   const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwokJPNPyuTZG7yHu8PeX162W8nh_U0jVPQzMw8RE8fVHZQak7bnTnh0JtmpRRyz7tG/exec";
+  alert('送出資料：\nq1=' + answers.q1 + '\nq2=' + (answers.q2 || answers.q2_doubt || '') + '\nq3=' + answers.q3);
   fetch(SHEET_WEBHOOK_URL, {
     method: 'POST',
     mode: 'no-cors',

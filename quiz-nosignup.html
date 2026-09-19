@@ -315,7 +315,7 @@ function goTo(step){
 function goToQ2(){
   const reason = answers.q1;
   // Show correct Q2 sub-section
-  ['q2-price','q2-compare','q2-doubt','q2-plan'].forEach(id => {
+  ['q2-price','q2-compare','q2-doubt','q2-plan','q2-time'].forEach(id => {
     document.getElementById(id).style.display = 'none';
   });
   answers.q2 = '';
@@ -334,9 +334,13 @@ function goToQ2(){
   } else if(reason === '目前還沒有明確的準備計畫'){
     document.getElementById('q2-plan').style.display = 'block';
     goTo(3);
+  } else if(reason === '時間安排不上'){
+    document.getElementById('q2-time').style.display = 'block';
+    goTo(3);
   } else {
-    // 時間安排不上 or 其他 → skip Q2
+    // 其他 → skip Q2
     answers.q2 = '-';
+    answers['q2-time'] = '';
     goTo(4);
   }
 }

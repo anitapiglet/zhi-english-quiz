@@ -117,9 +117,22 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
       <button class="btn btn-start" onclick="goTo(1)">開始填寫</button>
     </div>
 
-    <!-- Q1: Main reason -->
+
+    <!-- Q0: English name -->
     <div class="screen" id="screen-1">
       <span class="q-num">Q1</span>
+      <div class="q-title">請問你的英文名字怎麼稱呼？</div>
+      <div style="margin-bottom:20px;">
+        <input type="text" id="english-name" placeholder="例如：Anita" oninput="document.getElementById('next-1').disabled = this.value.trim() === ''">
+      </div>
+      <div class="nav">
+        <button class="btn btn-primary" id="next-1" disabled onclick="goTo(2)">下一步</button>
+      </div>
+    </div>
+
+    <!-- Q1: Main reason -->
+    <div class="screen" id="screen-2">
+      <span class="q-num">Q2</span>
       <div class="q-title">這次沒有報名，最主要的原因是？</div>
       <div class="options" data-q="q1">
         <div class="option" data-value="價格超出預算">價格超出預算</div>
@@ -130,13 +143,13 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
         <div class="option" data-value="其他">其他</div>
       </div>
       <div class="nav">
-        <button class="btn btn-primary" id="next-1" disabled onclick="goToQ2()">下一步</button>
+        <button class="btn btn-primary" id="next-2" disabled onclick="goToQ2()">下一步</button>
       </div>
     </div>
 
     <!-- Q2: Conditional follow-up -->
-    <div class="screen" id="screen-2">
-      <span class="q-num">Q2</span>
+    <div class="screen" id="screen-3">
+      <span class="q-num">Q3</span>
 
       <!-- 價格 -->
       <div id="q2-price">
@@ -178,14 +191,14 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
       </div>
 
       <div class="nav">
-        <button class="btn btn-secondary" onclick="goTo(1)">上一步</button>
-        <button class="btn btn-primary" id="next-2" disabled onclick="goTo(3)">下一步</button>
+        <button class="btn btn-secondary" onclick="goTo(2)">上一步</button>
+        <button class="btn btn-primary" id="next-3" disabled onclick="goTo(4)">下一步</button>
       </div>
     </div>
 
     <!-- Q3: Webinar rating -->
-    <div class="screen" id="screen-3">
-      <span class="q-num">Q3</span>
+    <div class="screen" id="screen-4">
+      <span class="q-num">Q4</span>
       <div class="q-title">這場講座對你了解雅思準備有幫助嗎？</div>
       <div class="options" data-q="q3">
         <div class="option" data-value="很有幫助，學到很多">😊 很有幫助，學到很多</div>
@@ -194,25 +207,25 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
       </div>
       <div class="nav">
         <button class="btn btn-secondary" id="back-3" onclick="goBackQ2()">上一步</button>
-        <button class="btn btn-primary" id="next-3" disabled onclick="goTo(4)">下一步</button>
+        <button class="btn btn-primary" id="next-4" disabled onclick="goTo(5)">下一步</button>
       </div>
     </div>
 
     <!-- Q4: Open feedback -->
-    <div class="screen" id="screen-4">
-      <span class="q-num">Q4</span>
+    <div class="screen" id="screen-5">
+      <span class="q-num">Q5</span>
       <div class="q-title">有什麼建議想讓我們知道嗎？<span class="optional-tag">選填</span></div>
       <div class="q-sub">任何想法都歡迎，不用寫太多</div>
       <textarea id="q4-text" placeholder="在這裡輸入..."></textarea>
       <div class="nav" style="margin-top:16px;">
-        <button class="btn btn-secondary" onclick="goTo(3)">上一步</button>
-        <button class="btn btn-primary" onclick="goTo(5)">下一步</button>
+        <button class="btn btn-secondary" onclick="goTo(4)">上一步</button>
+        <button class="btn btn-primary" onclick="goTo(6)">下一步</button>
       </div>
     </div>
 
     <!-- Q5: Contact preference -->
-    <div class="screen" id="screen-5">
-      <span class="q-num">Q5</span>
+    <div class="screen" id="screen-6">
+      <span class="q-num">Q6</span>
       <div class="q-title">如果之後有相關優惠或新內容，希望我們怎麼聯繫你？<span class="optional-tag">選填</span></div>
       <div class="q-sub">可複選</div>
 
@@ -242,7 +255,7 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
       </div>
 
       <div class="nav" style="margin-top:16px;">
-        <button class="btn btn-secondary" onclick="goTo(4)">上一步</button>
+        <button class="btn btn-secondary" onclick="goTo(5)">上一步</button>
         <button class="btn btn-primary" onclick="showResult()">送出問卷</button>
       </div>
     </div>
@@ -262,7 +275,7 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
 <script>
 const answers = {};
 const contactSelected = {phone: false, email: false, none: false};
-const totalSteps = 5;
+const totalSteps = 6;
 
 function setProgress(step){
   const pct = step === 'result' ? 100 : Math.round((step/totalSteps)*100);
@@ -292,34 +305,34 @@ function goToQ2(){
     document.getElementById(id).style.display = 'none';
   });
   answers.q2 = '';
-  document.getElementById('next-2').disabled = true;
+  document.getElementById('next-3').disabled = true;
 
   if(reason === '價格超出預算'){
     document.getElementById('q2-price').style.display = 'block';
-    goTo(2);
+    goTo(3);
   } else if(reason === '想再比較其他機構'){
     document.getElementById('q2-compare').style.display = 'block';
-    goTo(2);
+    goTo(3);
   } else if(reason === '對課程內容或教法還有疑慮'){
     document.getElementById('q2-doubt').style.display = 'block';
-    document.getElementById('next-2').disabled = false; // optional text
-    goTo(2);
+    document.getElementById('next-3').disabled = false; // optional text
+    goTo(3);
   } else if(reason === '目前還沒有明確的準備計畫'){
     document.getElementById('q2-plan').style.display = 'block';
-    goTo(2);
+    goTo(3);
   } else {
     // 時間安排不上 or 其他 → skip Q2
     answers.q2 = '-';
-    goTo(3);
+    goTo(4);
   }
 }
 
 function goBackQ2(){
   const reason = answers.q1;
   if(reason === '時間安排不上' || reason === '其他'){
-    goTo(1);
-  } else {
     goTo(2);
+  } else {
+    goTo(3);
   }
 }
 
@@ -358,8 +371,8 @@ document.querySelectorAll('.options').forEach(group => {
       group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
       opt.classList.add('selected');
       answers[qKey] = opt.dataset.value;
-      const screenNum = qKey.replace('q','');
-      const nextBtn = document.getElementById('next-' + screenNum);
+      const screenEl = group.closest('.screen');
+      const nextBtn = screenEl ? screenEl.querySelector('[id^="next-"]') : null;
       if(nextBtn) nextBtn.disabled = false;
     });
   });
@@ -372,6 +385,7 @@ document.getElementById('q2-doubt-text').addEventListener('input', function(){
 });
 
 function showResult(){
+  answers.name = document.getElementById('english-name').value;
   answers.q4_feedback = document.getElementById('q4-text').value;
   answers.contact_phone = contactSelected.phone ? document.getElementById('contact-phone').value : '';
   answers.contact_email = contactSelected.email ? document.getElementById('contact-email').value : '';
@@ -382,13 +396,14 @@ function showResult(){
   }
 
   const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw6Qk0oqA2t99kzwqt0fGxg4eErGZHc7abKsYJa5ViVgo2hx6105MUOt71P0B3PYo61/exec";
-  alert('送出資料：\nq1=' + answers.q1 + '\nq2=' + (answers.q2 || answers.q2_doubt || '') + '\nq3=' + answers.q3);
+  alert('送出資料：\nname=' + answers.name + '\nq1=' + answers.q1 + '\nq2=' + (answers.q2 || answers.q2_doubt || '') + '\nq3=' + answers.q3);
   fetch(SHEET_WEBHOOK_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: {'Content-Type': 'text/plain'},
     body: JSON.stringify({
       form_type: 'nosignup',
+      name: answers.name || '',
       q1_reason: answers.q1 || '',
       q2_followup: answers.q2 === '-' ? '' : (answers.q2 || answers.q2_doubt || ''),
       q3_rating: answers.q3 || '',

@@ -381,7 +381,7 @@ function showResult(){
     fbq('track', 'Lead');
   }
 
-  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwokJPNPyuTZG7yHu8PeX162W8nh_U0jVPQzMw8RE8fVHZQak7bnTnh0JtmpRRyz7tG/exec";
+  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw6Qk0oqA2t99kzwqt0fGxg4eErGZHc7abKsYJa5ViVgo2hx6105MUOt71P0B3PYo61/exec";
   alert('送出資料：\nq1=' + answers.q1 + '\nq2=' + (answers.q2 || answers.q2_doubt || '') + '\nq3=' + answers.q3);
   fetch(SHEET_WEBHOOK_URL, {
     method: 'POST',

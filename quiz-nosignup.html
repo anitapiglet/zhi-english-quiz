@@ -395,7 +395,7 @@ function showResult(){
     fbq('track', 'Lead');
   }
 
-  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw6Qk0oqA2t99kzwqt0fGxg4eErGZHc7abKsYJa5ViVgo2hx6105MUOt71P0B3PYo61/exec";
+  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwkHGsLlONpgHghNRiznGe3QC-RaRglLlqeBIphL02guMSz6ERQH5NEv8XVAmTtqp_9/exec";
   alert('送出資料：\nname=' + answers.name + '\nq1=' + answers.q1 + '\nq2=' + (answers.q2 || answers.q2_doubt || '') + '\nq3=' + answers.q3);
   fetch(SHEET_WEBHOOK_URL, {
     method: 'POST',

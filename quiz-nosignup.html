@@ -190,6 +190,20 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
         </div>
       </div>
 
+
+      <!-- 時間 -->
+      <div id="q2-time" style="display:none;">
+        <div class="q-title">你通常什麼時間比較方便上課？</div>
+        <div class="q-sub">可複選</div>
+        <div class="options" data-q="q2-time" data-multi="true">
+          <div class="option" data-value="平日白天">平日白天</div>
+          <div class="option" data-value="平日晚上">平日晚上</div>
+          <div class="option" data-value="週末白天">週末白天</div>
+          <div class="option" data-value="週末晚上">週末晚上</div>
+          <div class="option" data-value="我是全職考生（時間很彈性）">我是全職考生（時間很彈性）</div>
+        </div>
+      </div>
+
       <div class="nav">
         <button class="btn btn-secondary" onclick="goTo(2)">上一步</button>
         <button class="btn btn-primary" id="next-3" disabled onclick="goTo(4)">下一步</button>
@@ -329,7 +343,7 @@ function goToQ2(){
 
 function goBackQ2(){
   const reason = answers.q1;
-  if(reason === '時間安排不上' || reason === '其他'){
+  if(reason === '其他'){
     goTo(2);
   } else {
     goTo(3);
@@ -366,8 +380,18 @@ function toggleContact(type){
 // Option click handlers
 document.querySelectorAll('.options').forEach(group => {
   const qKey = group.dataset.q;
+  const isMulti = group.dataset.multi === 'true';
   group.querySelectorAll('.option').forEach(opt => {
     opt.addEventListener('click', () => {
+      if(isMulti){
+        opt.classList.toggle('selected');
+        const selected = Array.from(group.querySelectorAll('.option.selected')).map(o => o.dataset.value);
+        answers[qKey] = selected.join('、');
+        const screenEl = group.closest('.screen');
+        const nextBtn = screenEl ? screenEl.querySelector('[id^="next-"]') : null;
+        if(nextBtn) nextBtn.disabled = selected.length === 0;
+        return;
+      }
       group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
       opt.classList.add('selected');
       answers[qKey] = opt.dataset.value;
@@ -405,7 +429,7 @@ function showResult(){
       form_type: 'nosignup',
       name: answers.name || '',
       q1_reason: answers.q1 || '',
-      q2_followup: answers.q2 === '-' ? '' : (answers.q2 || answers.q2_doubt || ''),
+      q2_followup: answers.q2 === '-' ? (answers['q2-time'] || '') : (answers.q2 || answers.q2_doubt || ''),
       q3_rating: answers.q3 || '',
       q4_feedback: answers.q4_feedback || '',
       contact_pref: answers.contact_pref || '',

@@ -335,6 +335,7 @@ function goToQ2(){
     document.getElementById('q2-plan').style.display = 'block';
     goTo(3);
   } else if(reason === '時間安排不上'){
+    answers.q2 = '-';
     document.getElementById('q2-time').style.display = 'block';
     goTo(3);
   } else {

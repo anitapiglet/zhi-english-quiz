@@ -151,17 +151,6 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
     <div class="screen" id="screen-3">
       <span class="q-num">Q3</span>
 
-      <!-- 價格 -->
-      <div id="q2-price">
-        <div class="q-title">你能接受的課程費用大概是哪個範圍？</div>
-        <div class="options" data-q="q2" data-subtype="price">
-          <div class="option" data-value="10,000 以下">10,000 以下</div>
-          <div class="option" data-value="10,000–25,000">10,000–25,000</div>
-          <div class="option" data-value="25,000–35,000">25,000–35,000</div>
-          <div class="option" data-value="35,000–55,000">35,000–55,000</div>
-        </div>
-      </div>
-
       <!-- 比較 -->
       <div id="q2-compare" style="display:none;">
         <div class="q-title">你主要在比較哪方面？</div>
@@ -239,6 +228,17 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
           <div class="option" data-value="週末白天">週末白天</div>
           <div class="option" data-value="週末晚上">週末晚上</div>
           <div class="option" data-value="我是全職考生（時間很彈性）">我是全職考生（時間很彈性）</div>
+        </div>
+      </div>
+
+      <!-- 價格區間（所有人都看到）-->
+      <div id="q2-price-always" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--cream);">
+        <div class="q-title">你能接受的課程費用大概是哪個範圍？</div>
+        <div class="options" data-q="q2-price-range">
+          <div class="option" data-value="10,000 以下">10,000 以下</div>
+          <div class="option" data-value="10,000–25,000">10,000–25,000</div>
+          <div class="option" data-value="25,000–35,000">25,000–35,000</div>
+          <div class="option" data-value="35,000–55,000">35,000–55,000</div>
         </div>
       </div>
 
@@ -352,15 +352,16 @@ function goTo(step){
 
 function goToQ2(){
   const reason = answers.q1;
-  // Show correct Q2 sub-section
-  ['q2-price','q2-compare','q2-doubt','q2-plan','q2-time'].forEach(id => {
+  ['q2-compare','q2-doubt','q2-plan','q2-time'].forEach(id => {
     document.getElementById(id).style.display = 'none';
   });
   answers.q2 = '';
+  answers['q2-price-range'] = '';
   document.getElementById('next-3').disabled = true;
+  // clear price range selection
+  document.querySelectorAll('#q2-price-always .option').forEach(o => o.classList.remove('selected'));
 
   if(reason === '價格超出預算'){
-    document.getElementById('q2-price').style.display = 'block';
     goTo(3);
   } else if(reason === '想再比較其他機構'){
     document.getElementById('q2-compare').style.display = 'block';
@@ -435,7 +436,13 @@ document.querySelectorAll('.options').forEach(group => {
         answers[qKey] = selected.join('、');
         const screenEl = group.closest('.screen');
         const nextBtn = screenEl ? screenEl.querySelector('[id^="next-"]') : null;
-        if(nextBtn) nextBtn.disabled = selected.length === 0;
+        if(nextBtn){
+          if(screenEl.id === 'screen-3'){
+            nextBtn.disabled = !answers['q2-price-range'];
+          } else {
+            nextBtn.disabled = selected.length === 0;
+          }
+        }
         return;
       }
       group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
@@ -443,7 +450,14 @@ document.querySelectorAll('.options').forEach(group => {
       answers[qKey] = opt.dataset.value;
       const screenEl = group.closest('.screen');
       const nextBtn = screenEl ? screenEl.querySelector('[id^="next-"]') : null;
-      if(nextBtn) nextBtn.disabled = false;
+      if(nextBtn){
+        if(screenEl.id === 'screen-3'){
+          // screen-3: only enable next when price range is selected
+          nextBtn.disabled = !answers['q2-price-range'];
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
     });
   });
 });
@@ -481,7 +495,7 @@ function showResult(){
   }
 
   const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwkHGsLlONpgHghNRiznGe3QC-RaRglLlqeBIphL02guMSz6ERQH5NEv8XVAmTtqp_9/exec";
-  alert('送出資料：\nname=' + answers.name + '\nq1=' + answers.q1 + '\nq2=' + (answers.q2 || answers.q2_doubt || '') + '\nq2-time=' + (answers['q2-time'] || 'EMPTY') + '\nq3=' + answers.q3);
+  alert('送出資料：\nname=' + answers.name + '\nq1=' + answers.q1 + '\nq2=' + (answers.q2 || '') + '\nq2-time=' + (answers['q2-time'] || 'EMPTY') + '\nprice_range=' + (answers['q2-price-range'] || 'EMPTY') + '\nq3=' + answers.q3);
   fetch(SHEET_WEBHOOK_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -491,6 +505,7 @@ function showResult(){
       name: answers.name || '',
       q1_reason: answers.q1 || '',
       q2_followup: answers.q2 === '-' ? (answers['q2-time'] || '') : (answers.q2 ? (answers['q2-compare-detail'] ? answers.q2 + '：' + answers['q2-compare-detail'] : answers.q2) : ''),
+      q2_price_range: answers['q2-price-range'] || '',
       q3_rating: answers.q3 || '',
       q4_feedback: answers.q4_feedback || '',
       contact_pref: answers.contact_pref || '',

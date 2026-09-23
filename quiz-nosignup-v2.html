@@ -542,7 +542,7 @@ function showResult() {
 
   if(typeof fbq !== 'undefined') fbq('track', 'Lead');
 
-  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwkHGsLlONpgHghNRiznGe3QC-RaRglLlqeBIphL02guMSz6ERQH5NEv8XVAmTtqp_9/exec";
+  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyCWuMbrWPluEcqGJcda_0smSQllfVQ2kZnT1fvS0XMdFhAgQjC2kmw8q-fAmus0Cel/exec";
   alert('debug\nname=' + answers.name + '\nrank=' + rankings.join('>') + '\nprice=' + (answers['q2-price-range']||'EMPTY') + '\ntime=' + (answers['q2-time']||'-') + '\ndoubt=' + (answers['q2-doubt']||'-') + '\nplan=' + (answers['q2-plan']||'-') + '\ncompare=' + (answers['q2-compare']||'-'));
   fetch(SHEET_WEBHOOK_URL, {
     method: 'POST',

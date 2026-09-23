@@ -153,11 +153,12 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
 
       <!-- 價格 -->
       <div id="q2-price">
-        <div class="q-title">如果價格再優惠一些，你會考慮報名嗎？</div>
+        <div class="q-title">你能接受的課程費用大概是哪個範圍？</div>
         <div class="options" data-q="q2" data-subtype="price">
-          <div class="option" data-value="會，優惠的話我會認真考慮">會，優惠的話我會認真考慮</div>
-          <div class="option" data-value="可能會，要看優惠幅度">可能會，要看優惠幅度</div>
-          <div class="option" data-value="不會，主要考量不只是價格">不會，主要考量不只是價格</div>
+          <div class="option" data-value="10,000 以下">10,000 以下</div>
+          <div class="option" data-value="10,000–25,000">10,000–25,000</div>
+          <div class="option" data-value="25,000–35,000">25,000–35,000</div>
+          <div class="option" data-value="35,000–55,000">35,000–55,000</div>
         </div>
       </div>
 
@@ -167,17 +168,54 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
         <div class="options" data-q="q2" data-subtype="compare">
           <div class="option" data-value="師資背景">師資背景</div>
           <div class="option" data-value="價格方案">價格方案</div>
-          <div class="option" data-value="上課方式（實體/線上/彈性）">上課方式（實體/線上/彈性）</div>
+          <div class="option" data-value="上課方式">上課方式</div>
           <div class="option" data-value="整體口碑評價">整體口碑評價</div>
+        </div>
+        <!-- 師資背景 sub -->
+        <div id="compare-teacher" class="sub-fields" style="margin-top:12px;">
+          <div class="q-sub">你想比較師資的哪方面？（可複選）</div>
+          <div class="options" data-q="q2-compare-detail" data-multi="true">
+            <div class="option" data-value="老師的教學資歷與經驗">老師的教學資歷與經驗</div>
+            <div class="option" data-value="上課老師是否固定">上課老師是否固定（不會換人）</div>
+            <div class="option" data-value="老師國籍（台灣/外籍）">老師國籍（台灣/外籍）</div>
+            <div class="option" data-value="師生互動與教學風格">師生互動與教學風格</div>
+          </div>
+        </div>
+        <!-- 上課方式 sub -->
+        <div id="compare-mode" class="sub-fields" style="margin-top:12px;">
+          <div class="q-sub">你傾向哪種上課方式？</div>
+          <div class="options" data-q="q2-compare-detail">
+            <div class="option" data-value="線上課程">線上課程</div>
+            <div class="option" data-value="實體課程">實體課程</div>
+            <div class="option" data-value="都不確定，想先體驗再決定">都不確定，想先體驗再決定</div>
+          </div>
+        </div>
+        <!-- 口碑 sub -->
+        <div id="compare-reputation" class="sub-fields" style="margin-top:12px;">
+          <div class="q-sub">你通常會從哪裡查口碑？（可複選）</div>
+          <div class="options" data-q="q2-compare-detail" data-multi="true">
+            <div class="option" data-value="Instagram">Instagram</div>
+            <div class="option" data-value="Facebook">Facebook</div>
+            <div class="option" data-value="Threads（脆）">Threads（脆）</div>
+            <div class="option" data-value="Dcard">Dcard</div>
+            <div class="option" data-value="Google 評論">Google 評論</div>
+            <div class="option" data-value="小紅書">小紅書</div>
+          </div>
         </div>
       </div>
 
       <!-- 疑慮 -->
       <div id="q2-doubt" style="display:none;">
         <div class="q-title">你主要的疑慮是什麼？</div>
-        <div class="q-sub">簡單寫幾個字就好，幫助我們改進</div>
-        <textarea id="q2-doubt-text" maxlength="50" placeholder="例如：不確定老師的教學風格適不適合自己..."></textarea>
-        <div class="char-count"><span id="doubt-count">0</span>/50</div>
+        <div class="q-sub">可複選</div>
+        <div class="options" data-q="q2" data-subtype="doubt" data-multi="true">
+          <div class="option" data-value="不確定老師的教學風格適不適合自己">不確定老師的教學風格適不適合自己</div>
+          <div class="option" data-value="不確定課程進度能不能跟上">不確定課程進度能不能跟上</div>
+          <div class="option" data-value="想先有試聽或體驗課">想先有試聽或體驗課</div>
+          <div class="option" data-value="擔心費用 CP 值">擔心費用 CP 值</div>
+          <div class="option" data-value="想了解退費或保分政策">想了解退費或保分政策</div>
+          <div class="option" data-value="不確定課程是否針對我的目標分數">不確定課程是否針對我的目標分數</div>
+        </div>
       </div>
 
       <!-- 還沒計畫 -->
@@ -326,10 +364,13 @@ function goToQ2(){
     goTo(3);
   } else if(reason === '想再比較其他機構'){
     document.getElementById('q2-compare').style.display = 'block';
+    ['compare-teacher','compare-mode','compare-reputation'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    answers['q2-compare-detail'] = '';
     goTo(3);
   } else if(reason === '對課程內容或教法還有疑慮'){
     document.getElementById('q2-doubt').style.display = 'block';
-    document.getElementById('next-3').disabled = false; // optional text
     goTo(3);
   } else if(reason === '目前還沒有明確的準備計畫'){
     document.getElementById('q2-plan').style.display = 'block';
@@ -407,10 +448,25 @@ document.querySelectorAll('.options').forEach(group => {
   });
 });
 
-// Q2 doubt textarea
-document.getElementById('q2-doubt-text').addEventListener('input', function(){
-  document.getElementById('doubt-count').textContent = this.value.length;
-  answers.q2_doubt = this.value;
+// Compare sub-option show/hide
+document.querySelectorAll('#q2-compare .options[data-subtype="compare"] .option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    ['compare-teacher','compare-mode','compare-reputation'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    answers['q2-compare-detail'] = '';
+    document.querySelectorAll('#compare-teacher .option, #compare-mode .option, #compare-reputation .option').forEach(o => o.classList.remove('selected'));
+    const val = opt.dataset.value;
+    if(val === '師資背景') document.getElementById('compare-teacher').style.display = 'block';
+    else if(val === '上課方式') document.getElementById('compare-mode').style.display = 'block';
+    else if(val === '整體口碑評價') document.getElementById('compare-reputation').style.display = 'block';
+    // enable next for 價格方案 (no sub)
+    if(val === '價格方案'){
+      document.getElementById('next-3').disabled = false;
+    } else {
+      document.getElementById('next-3').disabled = true;
+    }
+  });
 });
 
 function showResult(){
@@ -434,7 +490,7 @@ function showResult(){
       form_type: 'nosignup',
       name: answers.name || '',
       q1_reason: answers.q1 || '',
-      q2_followup: answers.q2 === '-' ? (answers['q2-time'] || '') : (answers.q2 || answers.q2_doubt || ''),
+      q2_followup: answers.q2 === '-' ? (answers['q2-time'] || '') : (answers.q2 ? (answers['q2-compare-detail'] ? answers.q2 + '：' + answers['q2-compare-detail'] : answers.q2) : ''),
       q3_rating: answers.q3 || '',
       q4_feedback: answers.q4_feedback || '',
       contact_pref: answers.contact_pref || '',

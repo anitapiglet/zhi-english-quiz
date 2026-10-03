@@ -444,7 +444,10 @@ function goTo(step) {
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+const requiredKeys = []; // 記錄本次需要填的子問題 key
+
 function goToFollowUp() {
+  requiredKeys.length = 0;
   // 重置所有子問題和答案
   ['fq-compare','fq-time','fq-doubt','fq-plan'].forEach(id => {
     document.getElementById(id).style.display = 'none';
@@ -478,9 +481,18 @@ function goToFollowUp() {
     '對課程內容或教法還有疑慮': 'fq-doubt',
     '目前還沒有明確的準備計畫': 'fq-plan',
   };
+  const keyMap = {
+    '想再比較其他機構': 'q2-compare',
+    '時間安排不上': 'q2-time',
+    '對課程內容或教法還有疑慮': 'q2-doubt',
+    '目前還沒有明確的準備計畫': 'q2-plan',
+  };
   rankings.forEach(reason => {
     const fqId = mapping[reason];
-    if(fqId) document.getElementById(fqId).style.display = 'block';
+    if(fqId) {
+      document.getElementById(fqId).style.display = 'block';
+      requiredKeys.push(keyMap[reason]);
+    }
   });
 
   goTo(3);
@@ -492,21 +504,15 @@ function checkScreen3() {
     document.getElementById('next-3').disabled = true;
     return;
   }
-  // 每個顯示中的子問題都要有答案
-  const checks = [
-    {el:'fq-compare', key:'q2-compare'},
-    {el:'fq-time', key:'q2-time'},
-    {el:'fq-doubt', key:'q2-doubt'},
-    {el:'fq-plan', key:'q2-plan'},
-  ];
-  for(const c of checks) {
-    if(document.getElementById(c.el).style.display !== 'none' && !answers[c.key]) {
+  // 每個需要填的子問題都要有答案
+  for(const key of requiredKeys) {
+    if(!answers[key]) {
       document.getElementById('next-3').disabled = true;
       return;
     }
   }
-  // 比較子選項：如果顯示了，需要有詳細答案（價格方案除外）
-  if(document.getElementById('fq-compare').style.display !== 'none') {
+  // 比較子選項：選了非「價格方案」，需要有詳細答案
+  if(requiredKeys.includes('q2-compare')) {
     const compareVal = answers['q2-compare'];
     if(compareVal && compareVal !== '價格方案' && !answers['q2-compare-detail']) {
       document.getElementById('next-3').disabled = true;

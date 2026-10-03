@@ -97,6 +97,13 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
   .result-sub{font-size:14px;color:#666;line-height:1.7;}
   .optional-tag{font-size:11px;color:var(--grey);background:var(--lightblue);padding:2px 8px;border-radius:10px;margin-left:6px;}
   .compare-sub{display:none;margin-top:12px;}
+  .other-input-wrap{display:none;margin-top:8px;}
+  .other-input-wrap input{width:100%;padding:10px 12px;border:1.5px solid var(--taupe);border-radius:8px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;transition:border-color .2s;}
+  .other-input-wrap input:focus{border-color:var(--orange);}
+  .screenshot-banner{background:linear-gradient(135deg,var(--orange),#f09060);border-radius:16px;padding:24px 20px;text-align:center;margin-bottom:16px;color:#fff;}
+  .screenshot-banner .cam{font-size:40px;margin-bottom:8px;}
+  .screenshot-banner .msg{font-size:18px;font-weight:700;margin-bottom:4px;}
+  .screenshot-banner .sub{font-size:13px;opacity:0.9;}
 </style>
 </head>
 <body>
@@ -160,6 +167,9 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
           <span>其他</span>
         </div>
       </div>
+      <div id="q1-other-wrap" class="other-input-wrap" style="margin-bottom:12px;">
+        <input type="text" id="q1-other-text" placeholder="請說明其他原因..." maxlength="50">
+      </div>
       <div class="nav">
         <button class="btn btn-primary" id="next-2" disabled onclick="goToFollowUp()">下一步</button>
       </div>
@@ -180,6 +190,10 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
             <div class="option" data-value="價格方案">價格方案</div>
             <div class="option" data-value="上課方式">上課方式</div>
             <div class="option" data-value="整體口碑評價">整體口碑評價</div>
+            <div class="option" data-value="其他">其他</div>
+          </div>
+          <div class="other-input-wrap" id="compare-other-wrap">
+            <input type="text" id="compare-other-text" placeholder="請說明..." maxlength="50">
           </div>
           <!-- 師資 sub -->
           <div id="compare-teacher" class="compare-sub">
@@ -226,6 +240,10 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
             <div class="option" data-value="週末白天">週末白天</div>
             <div class="option" data-value="週末晚上">週末晚上</div>
             <div class="option" data-value="我是全職考生（時間很彈性）">我是全職考生（時間很彈性）</div>
+            <div class="option" data-value="其他">其他</div>
+          </div>
+          <div class="other-input-wrap" id="time-other-wrap">
+            <input type="text" id="time-other-text" placeholder="請說明..." maxlength="50">
           </div>
         </div>
       </div>
@@ -242,6 +260,10 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
             <div class="option" data-value="擔心費用 CP 值">擔心費用 CP 值</div>
             <div class="option" data-value="想了解退費或保分政策">想了解退費或保分政策</div>
             <div class="option" data-value="不確定課程是否針對我的目標分數">不確定課程是否針對我的目標分數</div>
+            <div class="option" data-value="其他">其他</div>
+          </div>
+          <div class="other-input-wrap" id="doubt-other-wrap">
+            <input type="text" id="doubt-other-text" placeholder="請說明..." maxlength="50">
           </div>
         </div>
       </div>
@@ -254,6 +276,10 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
             <div class="option" data-value="半年內">半年內</div>
             <div class="option" data-value="半年到一年">半年到一年</div>
             <div class="option" data-value="一年以上，還不確定">一年以上，還不確定</div>
+            <div class="option" data-value="其他">其他</div>
+          </div>
+          <div class="other-input-wrap" id="plan-other-wrap">
+            <input type="text" id="plan-other-text" placeholder="請說明..." maxlength="50">
           </div>
         </div>
       </div>
@@ -341,6 +367,11 @@ src="https://www.facebook.com/tr?id=1716535079738711&ev=PageView&noscript=1"/></
 
     <!-- Result -->
     <div class="screen" id="screen-result">
+      <div class="screenshot-banner">
+        <div class="cam">📸</div>
+        <div class="msg">記得截圖這個完成畫面</div>
+        <div class="sub">截圖後私訊給我們，即可解鎖免費課程 🎁</div>
+      </div>
       <div class="result-card">
         <div class="result-emoji">💛</div>
         <div class="result-title">感謝你的回饋！</div>
@@ -387,6 +418,9 @@ function updateRankDisplay() {
     }
   });
   document.getElementById('next-2').disabled = rankings.length === 0;
+  // show 其他 input if ranked
+  const otherWrap = document.getElementById('q1-other-wrap');
+  otherWrap.style.display = rankings.includes('其他') ? 'block' : 'none';
 }
 
 function setProgress(step) {
@@ -424,6 +458,15 @@ function goToFollowUp() {
   answers['q2-doubt'] = '';
   answers['q2-plan'] = '';
   answers['q2-price-range'] = '';
+  answers['q1-other'] = '';
+  answers['compare-other'] = '';
+  answers['time-other'] = '';
+  answers['doubt-other'] = '';
+  answers['plan-other'] = '';
+  ['compare-other-wrap','time-other-wrap','doubt-other-wrap','plan-other-wrap'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
   // 清除所有 screen-3 選擇狀態
   document.querySelectorAll('#screen-3 .option').forEach(o => o.classList.remove('selected'));
   document.getElementById('next-3').disabled = true;
@@ -489,6 +532,14 @@ document.querySelectorAll('#fq-compare .options[data-q="q2-compare"] .option').f
   });
 });
 
+// 其他 option show/hide in follow-up sections
+const otherMap = {
+  'q2-compare': {wrap:'compare-other-wrap', textId:'compare-other-text', key:'compare-other'},
+  'q2-time':    {wrap:'time-other-wrap',    textId:'time-other-text',    key:'time-other'},
+  'q2-doubt':   {wrap:'doubt-other-wrap',   textId:'doubt-other-text',   key:'doubt-other'},
+  'q2-plan':    {wrap:'plan-other-wrap',    textId:'plan-other-text',    key:'plan-other'},
+};
+
 // 通用 option 點擊 handler
 document.querySelectorAll('.options').forEach(group => {
   const qKey = group.dataset.q;
@@ -499,6 +550,14 @@ document.querySelectorAll('.options').forEach(group => {
         opt.classList.toggle('selected');
         const selected = Array.from(group.querySelectorAll('.option.selected')).map(o => o.dataset.value);
         answers[qKey] = selected.join('、');
+        // show 其他 input if applicable
+        if(otherMap[qKey]) {
+          const om = otherMap[qKey];
+          const wrap = document.getElementById(om.wrap);
+          const hasOther = selected.includes('其他');
+          if(wrap) wrap.style.display = hasOther ? 'block' : 'none';
+          if(!hasOther) answers[om.key] = '';
+        }
         const screenEl = group.closest('.screen');
         const nextBtn = screenEl ? screenEl.querySelector('[id^="next-"]') : null;
         if(nextBtn && screenEl.id === 'screen-3') checkScreen3();
@@ -508,6 +567,13 @@ document.querySelectorAll('.options').forEach(group => {
       group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
       opt.classList.add('selected');
       answers[qKey] = opt.dataset.value;
+      // show 其他 input if applicable
+      if(otherMap[qKey]) {
+        const om = otherMap[qKey];
+        const wrap = document.getElementById(om.wrap);
+        if(wrap) wrap.style.display = (opt.dataset.value === '其他') ? 'block' : 'none';
+        if(opt.dataset.value !== '其他') { answers[om.key] = ''; }
+      }
       const screenEl = group.closest('.screen');
       const nextBtn = screenEl ? screenEl.querySelector('[id^="next-"]') : null;
       if(nextBtn && screenEl.id === 'screen-3') checkScreen3();
@@ -533,6 +599,15 @@ function toggleContact(type) {
   });
 }
 
+// 其他 input listeners
+document.getElementById('q1-other-text').addEventListener('input', function(){
+  answers['q1-other'] = this.value;
+});
+['compare','time','doubt','plan'].forEach(k => {
+  const el = document.getElementById(k + '-other-text');
+  if(el) el.addEventListener('input', function(){ answers[k + '-other'] = this.value; });
+});
+
 function showResult() {
   answers.name = document.getElementById('english-name').value;
   answers.q4_feedback = document.getElementById('q4-text').value;
@@ -554,10 +629,15 @@ function showResult() {
       q1_rank1: rankings[0] || '',
       q1_rank2: rankings[1] || '',
       q1_rank3: rankings[2] || '',
+      q1_other: answers['q1-other'] || '',
       q2_compare: answers['q2-compare'] ? (answers['q2-compare-detail'] ? answers['q2-compare'] + '：' + answers['q2-compare-detail'] : answers['q2-compare']) : '',
+      q2_compare_other: answers['compare-other'] || '',
       q2_time: answers['q2-time'] || '',
+      q2_time_other: answers['time-other'] || '',
       q2_doubt: answers['q2-doubt'] || '',
+      q2_doubt_other: answers['doubt-other'] || '',
       q2_plan: answers['q2-plan'] || '',
+      q2_plan_other: answers['plan-other'] || '',
       q2_price_range: answers['q2-price-range'] || '',
       q3_rating: answers.q3 || '',
       q4_feedback: answers.q4_feedback || '',

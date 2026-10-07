@@ -468,7 +468,7 @@ function showResult(){
   answers.contact_phone=contactSelected.phone?document.getElementById('contact-phone').value:'';
   answers.contact_pref=Object.keys(contactSelected).filter(k=>contactSelected[k]).join('、')||'不需要';
   if(typeof fbq!=='undefined')fbq('track','Lead');
-  const WEBHOOK="https://script.google.com/macros/s/AKfycbzY66KFtORYOYPxjkWLejdWbW46d-ay-9l3jujC9w74JDcUbySwaSXMjADehxUFodKDCg/exec";
+  const WEBHOOK="https://script.google.com/macros/s/AKfycby_w6AKdhor8Q8g3tqPWkSLPZG5GNBoMS41Rmigt-HWSH3K5ybLwn3QAg-kIA0dXcgC4Q/exec";
   fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
     body:JSON.stringify({
       form_type:'nosignup_v3',
